@@ -11,8 +11,8 @@ class CalculatorViewController: UIViewController {
     var expressionString = String()
     var isCompleteOperation = Bool()
     
-    @IBOutlet weak var scrollerView: UIScrollView!
-    @IBOutlet weak var operationsStack: UIStackView!
+    @IBOutlet weak var expressionScrollerView: UIScrollView!
+    @IBOutlet weak var expressionStackView: UIStackView!
     
     
     @IBOutlet weak var operandLabel: UILabel!
@@ -48,8 +48,8 @@ class CalculatorViewController: UIViewController {
             expressionString += isValid(operatorLabel.text) + isValid(operandLabel.text)
         }
         
-        let operatorLabel = makeUILabel(isValid(operatorLabel.text))
-        let operandLabel = makeUILabel(isValid(operandLabel.text))
+        expressionStackView.addArrangedSubview(makeUILabel(isValid(operatorLabel.text)))
+        expressionStackView.addArrangedSubview(makeUILabel(isValid(operandLabel.text)))
         
         operatorLabel.text = sender.titleLabel?.text
         initailizeOperandLabel()

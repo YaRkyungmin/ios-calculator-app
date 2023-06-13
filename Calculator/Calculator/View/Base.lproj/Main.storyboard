@@ -364,10 +364,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="expressionScrollerView" destination="BOT-7g-vxv" id="eZd-SL-rmI"/>
+                        <outlet property="expressionStackView" destination="XRe-QE-UJf" id="6rZ-km-FcA"/>
                         <outlet property="operandLabel" destination="Lwz-OF-XHD" id="mPm-fY-vuk"/>
-                        <outlet property="operationsStack" destination="2pK-nQ-lxl" id="Kuo-bO-Tp2"/>
                         <outlet property="operatorLabel" destination="HPC-iy-qdm" id="fVe-h6-Imm"/>
-                        <outlet property="scrollerView" destination="BOT-7g-vxv" id="eZd-SL-rmI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
