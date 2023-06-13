@@ -35,4 +35,12 @@ extension String {
             return false
         }
     }
+    
+    var removeTrailingDot: String {
+        if self.hasSuffix(".") {
+            return String(self.dropLast())
+        } else {
+            return self
+        }
+    }
 }

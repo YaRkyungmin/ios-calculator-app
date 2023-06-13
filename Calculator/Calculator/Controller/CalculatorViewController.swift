@@ -13,6 +13,8 @@ class CalculatorViewController: UIViewController {
     
     @IBOutlet weak var scrollerView: UIScrollView!
     @IBOutlet weak var operationsStack: UIStackView!
+    
+    
     @IBOutlet weak var operandLabel: UILabel!
     @IBOutlet weak var operatorLabel: UILabel!
     
@@ -32,6 +34,8 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction func touchUpOperatorButton(_ sender: UIButton) {
+        operandLabel.text = isValid(operandLabel.text).removeTrailingDot
+        
         if isValid(operatorLabel.text).isEmpty && isValid(operandLabel.text).isZero {
             return
         }
@@ -43,6 +47,9 @@ class CalculatorViewController: UIViewController {
         if !isValid(operatorLabel.text).isEmpty, !isValid(operandLabel.text).isZero {
             expressionString += isValid(operatorLabel.text) + isValid(operandLabel.text)
         }
+        
+        let operatorLabel = makeUILabel(isValid(operatorLabel.text))
+        let operandLabel = makeUILabel(isValid(operandLabel.text))
         
         operatorLabel.text = sender.titleLabel?.text
         initailizeOperandLabel()
