@@ -22,13 +22,9 @@ class CalculatorViewController: UIViewController {
         initailizeOperandLabel()
         initailizeOperatorLabel()
     }
-        
+    
     @IBAction func touchUpNumberButton(_ sender: UIButton) {
-        guard !isCompleteOperation else {
-            return
-        }
-        
-        if isZero(operandLabel.text) {
+        if isValid(operandLabel.text).isZero {
             operandLabel.text = sender.titleLabel?.text
         } else {
             operandLabel.text? += isValid(sender.titleLabel?.text)
@@ -36,12 +32,16 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction func touchUpOperatorButton(_ sender: UIButton) {
-        if isEmpty(operatorLabel.text), !isZero(operandLabel.text) {
-            expressionString += isValid(operandLabel.text)
-        } else if !isEmpty(operatorLabel.text), !isZero(operandLabel.text) {
-            expressionString += isValid(operatorLabel.text) + isValid(operandLabel.text)
-        } else {
+        if isValid(operatorLabel.text).isEmpty && isValid(operandLabel.text).isZero {
             return
+        }
+        
+        if isValid(operatorLabel.text).isEmpty, !isValid(operandLabel.text).isZero {
+            expressionString += isValid(operandLabel.text)
+        }
+        
+        if !isValid(operatorLabel.text).isEmpty, !isValid(operandLabel.text).isZero {
+            expressionString += isValid(operatorLabel.text) + isValid(operandLabel.text)
         }
         
         operatorLabel.text = sender.titleLabel?.text
@@ -49,23 +49,31 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction func touchUpEqualButton(_ sender: Any) {
-        
-        
-        if !isEmpty(operatorLabel.text), !isZero(operandLabel.text), !isCompleteOperation {
-            expressionString += isValid(operatorLabel.text) + isValid(operandLabel.text)
-            var formulaStruct = ExpressionParser.parse(from: expressionString)
-            operandLabel.text = String(try! formulaStruct.result()) // 에러 처리
-            initailizeOperatorLabel()
-            initializeExpressionString()
-            isCompleteOperation = true
-        }
-    }
-    
-    @IBAction func touchUpSignButton(_ sender: UIButton) {
-        guard let operandLabelText = operandLabel.text else {
+        if isCompleteOperation, isValid(operatorLabel.text).isEmpty && isValid(operandLabel.text).isZero {
             return
         }
         
+        if isValid(operatorLabel.text).isEmpty, !isValid(operandLabel.text).isZero {
+            expressionString += isValid(operandLabel.text)
+        }
+        
+        if !isValid(operatorLabel.text).isEmpty, !isValid(operandLabel.text).isZero {
+            expressionString += isValid(operatorLabel.text) + isValid(operandLabel.text)
+        }
+    
+        var formulaStruct = ExpressionParser.parse(from: expressionString)
+        operandLabel.text = String(try! formulaStruct.result()) // 에러 처리
+        initailizeOperatorLabel()
+        initializeExpressionString()
+        isCompleteOperation = true
+    }
+    
+    @IBAction func touchUpSignButton(_ sender: UIButton) {
+        if isValid(operandLabel.text).isZero {
+            return
+        }
+        
+        operandLabel.text = isValid(operandLabel.text).convertSign
     }
     
     @IBAction func touchUpClearEntryButton(_ sender: Any) {
@@ -80,31 +88,19 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction func touchUpZeroButton(_ sender: UIButton) {
+        if isValid(operandLabel.text).isZero {
+            return
+        }
         
+        operandLabel.text? += isValid(sender.titleLabel?.text)
     }
     
     @IBAction func touchUpDotButton(_ sender: UIButton) {
-        
-    }
-    
-    func isZero(_ text: String?) -> Bool {
-        guard let zeroString = text else {
-            return false
+        if isValid(operandLabel.text).isPrime {
+            return
         }
         
-        if zeroString == "0" {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func isNegative(_ text: String) -> Bool {
-        if text.first == "-" {
-            return true
-        } else {
-            return false
-        }
+        operandLabel.text? += isValid(sender.titleLabel?.text)
     }
 
     func isValid(_ optionalString: String?) -> String {
@@ -112,14 +108,6 @@ class CalculatorViewController: UIViewController {
             return ""
         }
         return bindingString
-    }
-    
-    func isEmpty(_ text: String?) -> Bool {
-        guard let text = text else {
-            return true
-        }
-        
-        return text.isEmpty
     }
     
     func initailizeOperandLabel() {
