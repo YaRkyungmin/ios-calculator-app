@@ -48,8 +48,11 @@ class CalculatorViewController: UIViewController {
             expressionString += isValid(operatorLabel.text) + isValid(operandLabel.text)
         }
         
-        expressionStackView.addArrangedSubview(makeUILabel(isValid(operatorLabel.text)))
-        expressionStackView.addArrangedSubview(makeUILabel(isValid(operandLabel.text)))
+        let expressionStack = makeUIStackView()
+        expressionStack.addArrangedSubview(makeUILabel(isValid(operatorLabel.text)))
+        expressionStack.addArrangedSubview(makeUILabel(isValid(operandLabel.text)))
+        expressionStackView.addArrangedSubview(expressionStack)
+        expressionScrollerView.scrollToBottom()
         
         operatorLabel.text = sender.titleLabel?.text
         initailizeOperandLabel()
