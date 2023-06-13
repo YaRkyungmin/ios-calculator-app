@@ -24,20 +24,33 @@ class CalculatorViewController: UIViewController {
     }
         
     @IBAction func touchUpNumberButton(_ sender: UIButton) {
-        if isEmpty(operatorLabel.text), isZero(operandLabel.text), !isCompleteOperation {
+        guard !isCompleteOperation else {
+            return
+        }
+        
+        if isZero(operandLabel.text) {
             operandLabel.text = sender.titleLabel?.text
+        } else {
+            operandLabel.text? += isValid(sender.titleLabel?.text)
         }
     }
     
     @IBAction func touchUpOperatorButton(_ sender: UIButton) {
-        if !isEmpty(operatorLabel.text), !isZero(operandLabel.text), !isCompleteOperation {
+        if isEmpty(operatorLabel.text), !isZero(operandLabel.text) {
+            expressionString += isValid(operandLabel.text)
+        } else if !isEmpty(operatorLabel.text), !isZero(operandLabel.text) {
             expressionString += isValid(operatorLabel.text) + isValid(operandLabel.text)
-            operatorLabel.text = sender.titleLabel?.text
-            initailizeOperandLabel()
+        } else {
+            return
         }
+        
+        operatorLabel.text = sender.titleLabel?.text
+        initailizeOperandLabel()
     }
     
     @IBAction func touchUpEqualButton(_ sender: Any) {
+        
+        
         if !isEmpty(operatorLabel.text), !isZero(operandLabel.text), !isCompleteOperation {
             expressionString += isValid(operatorLabel.text) + isValid(operandLabel.text)
             var formulaStruct = ExpressionParser.parse(from: expressionString)
@@ -66,11 +79,7 @@ class CalculatorViewController: UIViewController {
         isCompleteOperation = false
     }
     
-    @IBAction func touchUpSingleZeroButton(_ sender: UIButton) {
-        
-    }
-    
-    @IBAction func touchUpDoubleZeroButton(_ sender: UIButton) {
+    @IBAction func touchUpZeroButton(_ sender: UIButton) {
         
     }
     
