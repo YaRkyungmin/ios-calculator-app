@@ -31,6 +31,7 @@ class CalculatorViewController: UIViewController {
         } else {
             operandLabel.text? += isValid(sender.titleLabel?.text)
         }
+        operandLabel.text = makeNumberFormat(for: isValid(operandLabel.text).replacingOccurrences(of: ",", with: ""))
     }
     
     @IBAction func touchUpOperatorButton(_ sender: UIButton) {
@@ -59,7 +60,7 @@ class CalculatorViewController: UIViewController {
     }
     
     @IBAction func touchUpEqualButton(_ sender: Any) {
-        if isCompleteOperation, isValid(operatorLabel.text).isEmpty && isValid(operandLabel.text).isZero {
+        if isCompleteOperation && isValid(operatorLabel.text).isEmpty {
             return
         }
         
@@ -73,6 +74,7 @@ class CalculatorViewController: UIViewController {
     
         var formulaStruct = ExpressionParser.parse(from: expressionString)
         operandLabel.text = String(try! formulaStruct.result()) // 에러 처리
+        operandLabel.text = makeNumberFormat(for: isValid(operandLabel.text).replacingOccurrences(of: ",", with: ""))
         initailizeOperatorLabel()
         initializeExpressionString()
         isCompleteOperation = true
@@ -159,6 +161,7 @@ class CalculatorViewController: UIViewController {
         let numberFormatter = NumberFormatter()
         
         numberFormatter.numberStyle = .decimal
+        numberFormatter.roundingMode = .down
         numberFormatter.maximumFractionDigits = 20
 
         return numberFormatter.string(for: Double(input)) ?? "0"
