@@ -81,7 +81,8 @@ Calculator project
  |![](https://hackmd.io/_uploads/BJYqJjODh.gif)|![](https://hackmd.io/_uploads/Syyi1i_Dh.gif)|![](https://hackmd.io/_uploads/HyOoyoOPn.gif)|
 
 ### ⭐️ Class 다이어그램
-<img width="" src="https://github.com/yagom-academy/ios-calculator-app/assets/74167204/ef17ca8a-4ebf-46a0-b52e-a1a621d6e5d0"> 
+<img width="" src="https://github.com/YaRkyungmin/ios-calculator-app/assets/74167204/5c56236d-af82-448d-a438-710fec13db10">
+리팩토리♻️ 이후 수정 예정 
 
 ### 🔁 LinkedList 시각화
 <p>
